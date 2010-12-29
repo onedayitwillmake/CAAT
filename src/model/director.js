@@ -67,6 +67,7 @@
                 CAAT.director=[];
                 CAAT.GlobalEnableEvents();
             }
+
             CAAT.director.push(this);
             this.timeline= new Date().getTime();
 
@@ -83,6 +84,30 @@
 
             return this;
         },
+
+		initializeNoCanvas: function(width,height,canvas) {
+
+            canvas= canvas || document.createElement('canvas');
+            canvas.width= 1;
+            canvas.height=1;
+
+            this.setBounds(0, 0, width, height);
+            this.create();
+            this.canvas= canvas;
+            this.ctx= canvas.getContext('2d');
+            this.crc= this.ctx;
+
+            if ( !CAAT.director ) {
+                CAAT.director=[];
+                CAAT.GlobalEnableEvents();
+            }
+
+            CAAT.director.push(this);
+            this.timeline= new Date().getTime();
+
+            return this;
+        },
+
         createScene : function() {
             var scene= new CAAT.Scene().create();
             this.addScene(scene);
