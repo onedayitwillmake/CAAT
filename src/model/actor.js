@@ -1767,10 +1767,24 @@
             this.domElement.innerHTML='<b>Ibon';
             return this;
         },
+
+		createOneday : function(containerElement) {
+            CAAT.CSSActor.superclass.create.call(this);
+            this.domElement= document.createElement('div');
+            this.domElement.style['position']='absolute';
+//            this.domElement.style['-webkit-transition']='all 0s';
+//            this.domElement.innerHTML='<b>Ibon';
+			containerElement.appendChild(this.domElement);
+            return this;
+        },
         setLocation : function( x, y ) {
             CAAT.CSSActor.superclass.setLocation.call(this,x,y);
-            this.domElement.style['left']= '0px';
-            this.domElement.style['top']= '0px';
+			this.domElement.style.webkitTransform ="translate3d("+x+"px,"+y+"px, 0px)";
+			this.domElement.style.MozTransform ="translate("+x+"px,"+y+"px)";
+
+			// Slowest, but most reliable
+//            this.domElement.style['left']= '0px';
+//            this.domElement.style['top']= '0px';
             return this;
         },
         setSize : function( w, h ) {
@@ -1802,7 +1816,16 @@
                     m[1][2]+
                     ')';
             */
-            var strMatrix='translate('+this.x+'px, '+this.y+'px)';
+
+			var strMatrix;
+
+			// Set using webkit translate3d if possible
+			if(this.domElement.style['-webkit-transform']) {
+            	strMatrix = "translate3d("+(this.x<<0)+"px,"+(this.y<<0)+"px, 0px)";
+			} else {
+				strMatrix='translate('+(this.x<<0)+'px, '+(this.y<<0)+'px)';
+			}
+
             if ( this.rotationAngle!=0 ) {
                 strMatrix= strMatrix+ ' rotate('+this.rotationAngle+'rad)';
             }
@@ -1824,6 +1847,16 @@
             this.domElement.style['-khtml-opacity']= this.alpha;
             this.domElement.style['-opacity']= this.alpha;
         },
+
+		setClassName : function(aClassNameString) {
+			this.domElement.className = aClassNameString;
+			return this;
+		},
+
+		getClassName : function() {
+			return this.domElement.className;
+		},
+
         addChild : function( actor ) {
             CAAT.CSSActor.superclass.addChild.call(this,actor);
 

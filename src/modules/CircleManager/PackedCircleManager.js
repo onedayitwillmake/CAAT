@@ -30,6 +30,7 @@
 		numberOfCollisionPasses:	1,
 		numberOfTargetingPasses:	0,
 		bounds:						new CAAT.Rectangle(),
+		collisionCallback:			null, // callback
 
 		/**
 		 * Adds a circle to the simulation
@@ -187,10 +188,10 @@
 							}
 
 							// Emit the collision event from each circle, with itself as the first parameter
-//							if(this.dispatchCollisionEvents && n == this.numberOfCollisionPasses-1)
-//							{
-//								this.eventEmitter.emit('collision', cj, ci, v);
-//							}
+							if(this.collisionCallback && n == this.numberOfCollisionPasses-1)
+							{
+								this.collisionCallback.block.call( this.collisionCallback.scope, ci, cj, v );
+							}
 						}
 					}
 				}
@@ -286,14 +287,14 @@
 		circlesCanCollide: function(circleA, circleB)
 		{
 			if(!circleA || !circleB || circleA === circleB) return false; 					// one is null (will be deleted next loop), or both point to same obj.
-//			if(circleA.delegate == null || circleB.delegate == null) return false;					// This circle will be removed next loop, it's entity is already removed
+			if(circleA.delegate == null || circleB.delegate == null) return false;					// This circle will be removed next loop, it's entity is already removed
 
-//			if(circleA.isFixed & circleB.isFixed) return false;
+			if(circleA.isFixed & circleB.isFixed) return false;
 //			if(circleA.delegate .clientID === circleB.delegate.clientID) return false; 				// Don't let something collide with stuff it owns
 
 			// They dont want to collide
-//			if((circleA.collisionGroup & circleB.collisionMask) == 0) return false;
-//			if((circleB.collisionGroup & circleA.collisionMask) == 0) return false;
+			if((circleA.collisionGroup & circleB.collisionMask) == 0) return false;
+			if((circleB.collisionGroup & circleA.collisionMask) == 0) return false;
 
 			return true;
 		},
@@ -318,6 +319,11 @@
 		{
 			this.numberOfTargetingPasses = value;
 			return this;
+		},
+
+		setCallback: function(block, scope)
+		{
+			this.collisionCallback = {'block': block, 'scope': scope};
 		},
 
 /**
