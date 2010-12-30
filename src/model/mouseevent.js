@@ -134,8 +134,8 @@ CAAT.getCanvasCoord= function __getCanvasCoord(point, e) {
 };
 
 CAAT.log= function(msg) {
-    if (console) {
-        console.log(msg);
+    if (window.console) {
+        window.console.log(msg);
     }
 };
 
@@ -169,7 +169,7 @@ CAAT.GlobalEnableEvents= function __GlobalEnableEvents() {
 
     window.addEventListener('keydown',
         CAAT.keyDownFunc= function(evt,c) {
-            var key = (evt.which) ? evt.which : event.keyCode;
+            var key = (evt.which) ? evt.which : evt.keyCode;
             switch( key ) {
             case CAAT.MouseEvent.prototype.SHIFT:
                 CAAT.modifiers|=CAAT.MouseEvent.prototype.SHIFT_MASK;
@@ -186,7 +186,7 @@ CAAT.GlobalEnableEvents= function __GlobalEnableEvents() {
 
     window.addEventListener('keyup',
         CAAT.keyUpFunc= function(evt,c) {
-            var key = (evt.which) ? evt.which : event.keyCode;
+            var key = (evt.which) ? evt.which : evt.keyCode;
             switch( key ) {
             case CAAT.MouseEvent.prototype.SHIFT:
                 CAAT.modifiers&=~CAAT.MouseEvent.prototype.SHIFT_MASK;

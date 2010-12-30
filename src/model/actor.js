@@ -1463,7 +1463,7 @@
             try {
                 var pos= this.font.indexOf("px");
                 var s =  this.font.substring(0, pos );
-                this.textHeight= parseInt(s);
+                this.textHeight= parseInt(s, 10);
             } catch(e) {
                 this.textHeight=20; // default height;
             }
@@ -1595,7 +1595,7 @@
 			this.path= path;
             this.pathInterpolator= interpolator || new CAAT.Interpolator().createLinearInterpolator();
             this.pathDuration= duration || 10000;
-			this.setBounds(0,0,parent.width,parent.height);
+			this.setBounds(0,0, this.parent.width, this.parent.height);
 			this.mouseEnabled= false;
 
             return this;

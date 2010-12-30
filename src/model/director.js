@@ -136,7 +136,8 @@
             /**
              * calculate animable elements and their bbox.
              */
-            var i,tt;
+            var i;
+			var tt;
 			for( i=0; i<this.childrenList.length; i++ ) {
 				if (this.childrenList[i].isInAnimationFrame(this.time)) {
                     tt= this.childrenList[i].time - this.childrenList[i].start_time;
@@ -568,19 +569,19 @@
          * Return the running browser name.
          */
 		getBrowserName : function() {
-			return BrowserDetect.browser;
+			return window.BrowserDetect.browser;
 		},
         /**
          * Return the running browser version.
          */
 		getBrowserVersion : function() {
-			return BrowserDetect.version;
+			return window.BrowserDetect.version;
 		},
         /**
          * Return the operating system name.
          */
 		getOSName : function() {
-			return BrowserDetect.OS;
+			return window.BrowserDetect.OS;
 		},
         /**
          * Gets the resource with the specified resource name.
