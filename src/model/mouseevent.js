@@ -62,7 +62,7 @@ CAAT.GlobalEventsEnabled=   false;
 
 /**
  * Global event function listeners.
- */
+ * These attributes are no longer needed.
 CAAT.keyDownFunc=           null;
 CAAT.keyUpFunc=             null;
 CAAT.mouseDownFunc=         null;
@@ -71,7 +71,7 @@ CAAT.mouseOverFunc=         null;
 CAAT.mouseOutFunc=          null;
 CAAT.mouseMoveFunc=         null;
 CAAT.dblClickFunc=          null;
-
+*/
 /**
  * Generic eventing attributes.
  */

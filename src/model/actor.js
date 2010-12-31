@@ -1463,7 +1463,7 @@
             try {
                 var pos= this.font.indexOf("px");
                 var s =  this.font.substring(0, pos );
-                this.textHeight= parseInt(s, 10);
+                this.textHeight= parseInt(s,10);
             } catch(e) {
                 this.textHeight=20; // default height;
             }
@@ -1595,7 +1595,13 @@
 			this.path= path;
             this.pathInterpolator= interpolator || new CAAT.Interpolator().createLinearInterpolator();
             this.pathDuration= duration || 10000;
-			this.setBounds(0,0, this.parent.width, this.parent.height);
+
+            /*
+            parent could not be set by the time this method is called.
+            so the actors bounds set is removed.
+            the developer must ensure to call setbounds properly on actor.
+             */
+//			this.setBounds(0,0,this.parent.width,this.parent.height);
 			this.mouseEnabled= false;
 
             return this;
@@ -1673,7 +1679,7 @@
         return this;
     };
 
-    extend( CAAT.ShapeActor, CAAT.Actor, {
+    extend( CAAT.ShapeActor, CAAT.ActorContainer, {
 
         shape:          0,      // shape type. One of the constant SHAPE_* values
         compositeOp:    null,   // a valid canvas rendering context string describing compositeOps.
@@ -1795,6 +1801,7 @@
             return this;
         },
 
+		
 		createOneday : function(containerElement) {
             CAAT.CSSActor.superclass.create.call(this);
             this.domElement= document.createElement('div');
@@ -1806,12 +1813,8 @@
         },
         setLocation : function( x, y ) {
             CAAT.CSSActor.superclass.setLocation.call(this,x,y);
-			this.domElement.style.webkitTransform ="translate3d("+x+"px,"+y+"px, 0px)";
-			this.domElement.style.MozTransform ="translate("+x+"px,"+y+"px)";
-
-			// Slowest, but most reliable
-//            this.domElement.style['left']= '0px';
-//            this.domElement.style['top']= '0px';
+            this.domElement.style['left']= '0px';
+            this.domElement.style['top']= '0px';
             return this;
         },
         setSize : function( w, h ) {
